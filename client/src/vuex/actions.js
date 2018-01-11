@@ -3,7 +3,10 @@ import router from '../router'
 import swal from 'sweetalert'
 
 const http = axios.create({
-  baseURL: 'http://localhost:3000/api'
+  baseURL: 'http://localhost:3000/api',
+  headers: {
+    Authorization: localStorage.getItem('token')
+  }
 })
 
 export const getAll = ({ commit }, payload) => {
@@ -45,21 +48,67 @@ export const login = ({ commit }, payload) => {
 }
 
 export const addBook = ({ commit }, payload) => {
+  console.log('payload addbook', payload)
   let book = new FormData()
   book.append('title', payload.title)
   book.append('author', payload.author)
   book.append('content', payload.content)
   book.append('image', payload.image)
-  http.post('/articles', payload)
+  http.post('/articles', book)
   .then(({data}) => {
     console.log(data)
+    commit('saveBooks', data)
     swal({
       title: 'OK',
       text: data.message,
       icon: 'success',
       button: 'OK'
     }).then(() => {
-      commit('saveBooks', data)
+      router.push('/admin')
+    })
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+}
+
+export const editBook = ({ commit }, payload) => {
+  console.log('payload editbook', payload)
+  let book = new FormData()
+  book.append('title', payload.title)
+  book.append('author', payload.author)
+  book.append('content', payload.content)
+  book.append('image', payload.image)
+  http.put('/articles/' + payload.id, book)
+  .then(({data}) => {
+    console.log(data)
+    commit('saveEditedBooks', data)
+    swal({
+      title: 'OK',
+      text: data.message,
+      icon: 'success',
+      button: 'OK'
+    }).then(() => {
+      router.push('/admin')
+    })
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+}
+
+export const deletedBook = ({ commit }, id) => {
+  console.log('payload deletedBook', id)
+  http.delete('/articles/' + id)
+  .then(({data}) => {
+    console.log(data)
+    commit('saveDeletedBooks', data)
+    swal({
+      title: 'OK',
+      text: data.message,
+      icon: 'success',
+      button: 'OK'
+    }).then(() => {
       router.push('/admin')
     })
   })

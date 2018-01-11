@@ -3,6 +3,14 @@ html {
   font-size: 14px;
 }
 
+.link {
+  color: black;
+}
+
+.link:hover {
+  color: blue;
+}
+
 .card {
   font-size: 1em;
   overflow: hidden;

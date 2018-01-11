@@ -5,12 +5,12 @@
         <form>
           <fieldset>
             <div class="form-group">
-              <label for="exampleInputEmail1">Title</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" v-model="book.title" aria-describedby="emailHelp" placeholder="title..">
+              <label>Title</label>
+              <input type="text" class="form-control" v-model="book.title" placeholder="title..">
             </div>
             <div class="form-group">
-              <label for="exampleInputEmail1">Author</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" v-model="book.author"aria-describedby="emailHelp" placeholder="author..">
+              <label>Author</label>
+              <input type="text" class="form-control" v-model="book.author" placeholder="author..">
             </div>
             <div class="form-group">
               <label for="exampleTextarea">Description</label>
@@ -18,10 +18,10 @@
             </div>
             <div class="form-group">
               <label for="exampleInputFile">Add Poster</label>
-              <input type="file" class="form-control-file" id="InputFile" aria-describedby="fileHelp">
+              <input type="file" class="form-control-file" id="InputFile" aria-describedby="fileHelp" @change="onFileChange">
               <small id="fileHelp" class="form-text text-muted"></small>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-primary" @click="addBooks">Submit</button>
           </fieldset>
         </form>
       </div>
@@ -30,14 +30,36 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   data () {
     return {
       book: {
         title: '',
         content: '',
-        author: ''
+        author: '',
+        image: ''
       }
+    }
+  },
+
+  methods: {
+    ...mapActions(['addBook']),
+    onFileChange (e) {
+      var files = e.target.files || e.dataTransfer.files
+      if (!files.length) {
+        return
+      }
+      this.book.image = files[0]
+    },
+    addBooks () {
+      let obj = {
+        title: this.book.title,
+        author: this.book.author,
+        content: this.book.content,
+        image: this.book.image
+      }
+      this.addBook(obj)
     }
   }
 }

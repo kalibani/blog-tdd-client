@@ -58,12 +58,28 @@ export default new Router({
     {
       path: '/article/add',
       name: 'add',
-      component: add
+      component: add,
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token')
+        if (token) {
+          next()
+        } else {
+          next('/')
+        }
+      }
     },
     {
-      path: '/article/edit',
+      path: '/article/edit/:id',
       name: 'edit',
-      component: edit
+      component: edit,
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token')
+        if (token) {
+          next()
+        } else {
+          next('/')
+        }
+      }
     }
   ],
   mode: 'history'

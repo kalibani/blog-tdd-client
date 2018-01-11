@@ -6,7 +6,7 @@
         <div class="card card-inverse card-info">
           <ul class="list-group">
             <li class="list-group-item">
-              <router-link class="navbar-brand" :to="{ name: 'Blogdetail', params: {id: article._id} }">
+              <router-link class="navbar-brand link" :to="{ name: 'Blogdetail', params: {id: article._id} }">
                 {{article.title}}
               </router-link>
             </li>
@@ -26,7 +26,7 @@
                 <br>
                 <h4 class="card-title">{{article.title}}</h4>
                 <p class="card-text">by {{article.author}}</p>
-                <read-more more-str="read more..." :text="article.content" link="#" less-str="read less" :max-chars="100"></read-more>
+                <p class="card-text">{{article.content}}</p>
               </div>
             </div>
           </div>
@@ -68,4 +68,10 @@ export default {
 </script>
 
 <style lang="css">
+.link {
+  color: black;
+}
+.link:hover {
+  color: blue;
+}
 </style>

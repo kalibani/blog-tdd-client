@@ -7,7 +7,7 @@
         <div class="card card-inverse card-info">
           <ul class="list-group" v-for="article in articles">
             <li class="list-group-item">
-              <router-link class="navbar-brand" :to="{ name: 'Blogdetail', params: {id: article._id} }">
+              <router-link class="navbar-brand link" :to="{ name: 'Blogdetail', params: {id: article._id} }">
                 {{article.title}}
               </router-link>
             </li>

@@ -2,7 +2,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-10 mt-4">
-        <router-link :to="{ name: 'add' }" class="nav-link">Add Book</router-link>
+        <div class="">
+          <router-link :to="{ name: 'add' }" class="nav-link link" style="float:left;">Add Book</router-link>
+          <a href="" role="button" @click="logout" class="nav-link link" style="float:right;">Logout</a>
+        </div>
         <table class="table table-hover">
           <thead>
             <tr>
@@ -18,10 +21,10 @@
               <th scope="row">{{article.title}}</th>
               <td>{{article.author}}</td>
               <td><read-more more-str="read more..." :text="article.content" link="#" less-str="read less" :max-chars="100"></read-more></td>
-              <td>{{article.image}}</td>
+              <td><a class="link" :href="article.image">{{article.image}}</a></td>
               <td>
-                <router-link :to="{ name: 'edit', params: {id: article._id} }" class="nav-link">Update</router-link>
-                <router-link to="" role="button" class="nav-link">Delete</router-link>
+                <router-link :to="{ name: 'edit', params: {id: article._id} }" class="nav-link link">Update</router-link>
+                <a href="" role="button" @click.prevent="deletedBook(article._id)" class="nav-link link">Delete</a>
               </td>
             </tr>
           </tbody>
@@ -43,10 +46,23 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getAll'])
+    ...mapActions([
+      'getAll',
+      'deletedBook'
+    ]),
+    logout () {
+      localStorage.removeItem('token')
+      this.$router.push('/')
+    }
   }
 }
 </script>
 
-<style lang="css">
+<style scoped="" lang="css">
+.link {
+  color: black;
+}
+.link:hover {
+  color: blue;
+}
 </style>
