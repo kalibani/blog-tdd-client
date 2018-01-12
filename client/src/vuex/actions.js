@@ -4,7 +4,7 @@ import swal from 'sweetalert'
 
 const token = localStorage.getItem('token')
 const http = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: 'http://goodreads-api.kautzaralibani.com/api',
   headers: {
     Authorization: token
   }
