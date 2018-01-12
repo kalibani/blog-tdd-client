@@ -34,15 +34,24 @@ export const login = ({ commit }, payload) => {
   .then(({data}) => {
     console.log(data)
     localStorage.setItem('token', data.token)
-    swal({
-      title: 'OK',
-      text: data.message,
-      icon: 'success',
-      button: 'OK'
-    }).then(() => {
-      location.reload()
-      router.push('/admin')
-    })
+    if (data.token) {
+      swal({
+        title: 'OK',
+        text: data.message,
+        icon: 'success',
+        button: 'OK'
+      }).then(() => {
+        location.reload()
+        router.push('/admin')
+      })
+    } else {
+      swal({
+        title: 'error',
+        text: data.message,
+        icon: 'error',
+        button: 'OK'
+      })
+    }
   })
   .catch((err) => {
     console.log(err)
