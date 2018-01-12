@@ -33,13 +33,14 @@ export const login = ({ commit }, payload) => {
   http.post('/users/auth/login', payload)
   .then(({data}) => {
     console.log(data)
+    localStorage.setItem('token', data.token)
     swal({
       title: 'OK',
       text: data.message,
       icon: 'success',
       button: 'OK'
     }).then(() => {
-      localStorage.setItem('token', data.token)
+      location.reload()
       router.push('/admin')
     })
   })
