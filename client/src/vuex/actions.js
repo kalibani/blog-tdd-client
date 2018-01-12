@@ -2,10 +2,11 @@ import axios from 'axios'
 import router from '../router'
 import swal from 'sweetalert'
 
+const token = localStorage.getItem('token')
 const http = axios.create({
   baseURL: 'http://localhost:3000/api',
   headers: {
-    Authorization: localStorage.getItem('token')
+    Authorization: token
   }
 })
 
@@ -105,7 +106,7 @@ export const deletedBook = ({ commit }, id) => {
     commit('saveDeletedBooks', data)
     swal({
       title: 'OK',
-      text: data.message,
+      text: 'book succesfully deleted',
       icon: 'success',
       button: 'OK'
     }).then(() => {
